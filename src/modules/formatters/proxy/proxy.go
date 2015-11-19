@@ -39,7 +39,7 @@ func condition(req *http.Request) bool {
 		return err == nil*/
 }
 
-// Mutator converts all external <img> references to the relative
+// mutator converts all external <img> references to the relative
 // cached URLs (as configured in ProxyDomain). If the resource is
 // not currently cached, caches it. If fetching fails somehow,
 // the <img> is replaced with a simple link to the original resource.
@@ -72,7 +72,8 @@ func (f *proxyMutator) mutator(data modules.PostMutatorData) {
 				`<img src="`+f.domain+res.Path+`"`+sizedata+` alt="`+content.URL+`">`, -1)
 		} else {
 			// Give up and serve the link instead
-			rawcontent = strings.Replace(rawcontent, content.Original, `<a href="`+content.URL+`">`+content.URL+`</a>`, -1)
+			rawcontent = strings.Replace(rawcontent, content.Original,
+				`<a href="`+content.URL+`">`+content.URL+`</a>`, -1)
 		}
 	}
 	(*data.Post).Content = rawcontent
